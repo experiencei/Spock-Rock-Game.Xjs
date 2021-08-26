@@ -1,3 +1,4 @@
+import { startConfetti, stopConfetti, removeConfetti } from './confetti.js';
 
 const playerScoreEl = document.getElementById('playerScore');
 const playerChoiceEl = document.getElementById('playerChoice');
@@ -19,7 +20,6 @@ const computerSpock = document.getElementById('computerSpock');
 const allGameIcons = document.querySelectorAll('.far');
 const resultText = document.getElementById('resultText');
 
-
 const choices = {
   rock: { name: 'Rock', defeats: ['scissors', 'lizard'] },
   paper: { name: 'Paper', defeats: ['rock', 'spock'] },
@@ -28,6 +28,11 @@ const choices = {
   spock: { name: 'Spock', defeats: ['scissors', 'rock'] },
 };
 
+let playerScoreNumber = 0;
+let computerScoreNumber = 0;
+let computerChoice = '';
+
+// Reset all 'selected' icons, remove confetti
 function resetSelected() {
   allGameIcons.forEach((icon) => {
     icon.classList.remove('selected');
@@ -47,6 +52,7 @@ function resetAll() {
   resultText.textContent = '';
   resetSelected();
 }
+window.resetAll = resetAll;
 
 // Random computer choice
 function computerRandomChoice() {
@@ -117,11 +123,11 @@ function checkResult(playerChoice) {
   computerRandomChoice();
   displayComputerChoice();
   updateScore(playerChoice);
-}  
+}
 
 // Passing player selection value and styling icons
 function select(playerChoice) {
-  checkResult(playerChoice)
+  checkResult(playerChoice);
   // Add 'selected' styling & playerChoice
   switch (playerChoice) {
     case 'rock':
@@ -148,6 +154,7 @@ function select(playerChoice) {
       break;
   }
 }
+window.select = select;
 
 // On startup, set initial values
 resetAll();

@@ -204,3 +204,31 @@ function drawParticles(context) {
     context.stroke();
   }
 }
+
+function updateParticles() {
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+    var particle;
+    waveAngle += 0.01;
+    for (var i = 0; i < particles.length; i++) {
+      particle = particles[i];
+      if (!streamingConfetti && particle.y < -15) particle.y = height + 100;
+      else {
+        particle.tiltAngle += particle.tiltAngleIncrement;
+        particle.x += Math.sin(waveAngle) - 0.5;
+        particle.y +=
+          (Math.cos(waveAngle) + particle.diameter + confetti.speed) * 0.5;
+        particle.tilt = Math.sin(particle.tiltAngle) * 15;
+      }
+      if (particle.x > width + 20 || particle.x < -20 || particle.y > height) {
+        if (streamingConfetti && particles.length <= confetti.maxCount)
+          resetParticle(particle, width, height);
+        else {
+          particles.splice(i, 1);
+          i--;
+        }
+      }
+    }
+  }
+  
+  export { startConfetti, stopConfetti, removeConfetti };

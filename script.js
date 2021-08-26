@@ -32,6 +32,8 @@ function resetSelected() {
   allGameIcons.forEach((icon) => {
     icon.classList.remove('selected');
   });
+  stopConfetti();
+  removeConfetti();
 }
 
 // Reset score & playerChoice/computerChoice
@@ -146,3 +148,6 @@ function select(playerChoice) {
       break;
   }
 }
+
+// On startup, set initial values
+resetAll();
